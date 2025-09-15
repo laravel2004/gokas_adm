@@ -20,11 +20,24 @@ class LoanController extends Controller
         $this->loan = $loan;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $loans = $this->loan->orderBy('created_at', 'desc')->get();
-        return view('pages.loan.index', compact('loans'));
+        $statusFilter = $request->input('status');
+
+        $loan = $this->loan->orderBy('created_at', 'desc');
+
+        if($statusFilter == 'Pengajuan') {
+            $loan->where('status', '["Pengajuan"]')->get();
+        }
+        else if($statusFilter == 'Disetujui Approval') {
+            $loan->where('status', '["Pengajuan","Disetujui Approval"]')->get();
+        }
+
+        $loans = $loan->get();
+
+        return view('pages.loan.index', compact('loans', 'statusFilter'));
     }
+
 
     public function create()
     {

@@ -21,6 +21,22 @@
                     <a href="{{ route('admin.loan.create') }}" class="btn btn-primary btn-add btn-md align-self-start mx-auto mx-md-0">Add New Loan</a>
                 </div>
                 <div class="table-responsive">
+                    <form method="GET" action="{{ route('admin.loan.index') }}" class="mb-4">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h6 class="mb-0 fw-bold text-center">
+                                    <i class="bi bi-filter-circle me-2"></i>Filter by Status
+                                </h6>
+                            </div>
+                            <div class="col-md-10">
+                                <select name="status" class="form-select shadow-sm" onchange="this.form.submit()">
+                                    <option value="">All</option>
+                                    <option value="Pengajuan" {{ request('status') == 'Pengajuan' ? 'selected' : '' }}>Pengajuan</option>
+                                    <option value="Disetujui Approval" {{ request('status') == 'Disetujui Approval' ? 'selected' : '' }}>Disetujui Approval</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                     <table id="zero_config"
                            class="table table-striped table-bordered align-middle">
                         <thead>
